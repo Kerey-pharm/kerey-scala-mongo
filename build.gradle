@@ -1,0 +1,19 @@
+apply plugin: 'scala'
+apply plugin: 'application'
+
+mainClassName = 'kz.kerey.Main'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'http://repo1.maven.org/maven2/'
+    }
+}
+
+dependencies {
+    compile 'org.scala-lang:scala-library-all:2.11.6',
+            'org.mongodb:casbah_2.11:2.8.1',
+            'com.sparkjava:spark-core:2.1'
+
+    testCompile 'org.scalatest:scalatest_2.11:2.2.4'
+}
