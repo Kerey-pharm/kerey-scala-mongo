@@ -5,8 +5,6 @@ import java.io.{FileInputStream, File}
 import kz.kerey.entities.system.Session
 import spark._
 
-import scala.io.Source
-
 object ResourceController {
 
   def initialize() = {
@@ -18,12 +16,12 @@ object ResourceController {
         val session = request.cookie("session")
         println(session + " is come")
         if (session==null) {
-          response.redirect("/login")
+          response.redirect("/web/pages/public/login.html")
         }
         else {
           if (!Session.isValid(session)) {
             response.removeCookie("session")
-            Spark.halt(401, "Not authorized")
+            response.redirect("/web/pages/public/error.html")
           }
           else {
             response.cookie("session",session)
@@ -32,8 +30,8 @@ object ResourceController {
       }
     }
 
-    Spark.before("/index", loginFilter)
-    Spark.before("/web/pages/:name", loginFilter)
+    Spark.before("/", loginFilter)
+    Spark.before("/web/pages/auth/:name", loginFilter)
 
     Spark.get("/login", new Route {
       override def handle(request: Request, response: Response): AnyRef = {
@@ -51,16 +49,9 @@ object ResourceController {
       }
     })
 
-    Spark.get("/index", new Route {
+    Spark.get("/", new Route {
       override def handle(request: Request, response: Response): AnyRef = {
-        response.redirect("/web/pages/index.html")
-        ""
-      }
-    })
-
-    Spark.get("/login", new Route {
-      override def handle(request: Request, response: Response): AnyRef = {
-        response.redirect("/web/pages/login.html")
+        response.redirect("/web/pages/auth/index.html")
         ""
       }
     })
@@ -73,6 +64,7 @@ object ResourceController {
         val buf = new Array[Byte](file.length().toInt)
         inputStream.read(buf)
         response.raw().getOutputStream.write(buf)
+        inputStream.close()
         ""
       }
     })
@@ -85,6 +77,7 @@ object ResourceController {
         val buf = new Array[Byte](file.length().toInt)
         inputStream.read(buf)
         response.raw().getOutputStream.write(buf)
+        inputStream.close()
         "ok"
       }
     })
@@ -97,18 +90,33 @@ object ResourceController {
         val buf = new Array[Byte](file.length().toInt)
         inputStream.read(buf)
         response.raw().getOutputStream.write(buf)
+        inputStream.close()
         ""
       }
     })
 
-    Spark.get("/web/pages/:name", new Route {
+    Spark.get("/web/pages/auth/:name", new Route {
       override def handle(request: Request, response: Response): AnyRef = {
         response.`type`("text/html")
-        val file = new File("web/pages/"+request.params("name"))
+        val file = new File("web/pages/auth/"+request.params("name"))
         val inputStream = new FileInputStream(file)
         val buf = new Array[Byte](file.length().toInt)
         inputStream.read(buf)
         response.raw().getOutputStream.write(buf)
+        inputStream.close()
+        ""
+      }
+    })
+
+    Spark.get("/web/pages/public/:name", new Route {
+      override def handle(request: Request, response: Response): AnyRef = {
+        response.`type`("text/html")
+        val file = new File("web/pages/public/"+request.params("name"))
+        val inputStream = new FileInputStream(file)
+        val buf = new Array[Byte](file.length().toInt)
+        inputStream.read(buf)
+        response.raw().getOutputStream.write(buf)
+        inputStream.close()
         ""
       }
     })
