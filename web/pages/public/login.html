@@ -7,18 +7,18 @@
 <body>
 
 <div class="form">
-    <form method="post">
+    <form method="get" action="/login">
         <!--Чтоб подстветить поле с ошибкой - напиши "<div class="row hasError">"-->
         <div class="row">
             <label for="login">Login</label>
-            <input type="text" name="login" id="login" />
+            <input type="text" name="userId" id="login" />
         </div>
         <div class="row">
             <label for="password">Password</label>
             <input type="password" name="password" id="password" />
         </div>
         <div class="p-center">
-            <input class="btn btn-success" type="button" value="Login" />
+            <input class="btn btn-success" type="submit" value="Login" />
         </div>
     </form>
 </div>

@@ -16,9 +16,17 @@ object User {
     }
   }
 
-  def authenticate(userId: String, password: String): Boolean = {
+  def authenticate(userId: String, password: String): User = {
     val userDb = users.findOne(userId)
-    if (userDb!=null && userDb.get("password")==password) true else false
+    if (userDb!=null && userDb.get("password")==password)
+      User(
+        _id = userDb.get("_id").asInstanceOf[String],
+        password = userDb.get("password").asInstanceOf[String],
+        name = userDb.get("name").asInstanceOf[String],
+        lastName = userDb.get("lastName").asInstanceOf[String],
+        email = userDb.get("email").asInstanceOf[String]
+      )
+    else null
   }
 
   def getUser(userId: String): User = {

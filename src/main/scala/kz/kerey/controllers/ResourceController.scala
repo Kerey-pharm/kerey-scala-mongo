@@ -2,7 +2,8 @@ package kz.kerey.controllers
 
 import java.io.{FileInputStream, File}
 
-import kz.kerey.entities.system.Session
+import kz.kerey.db.DefaultDbConfig
+import kz.kerey.entities.system.{User, Session}
 import spark._
 
 object ResourceController {
@@ -35,16 +36,19 @@ object ResourceController {
 
     Spark.get("/login", new Route {
       override def handle(request: Request, response: Response): AnyRef = {
-        val session = request.cookie("session")
-        if (session==null) {
-          val cook = Session.getSessionCookie()._id.toString
-          response.cookie("session", cook)
-          response.redirect("/index")
-          "login is ok"
+        val userId = request.queryParams("userId")
+        val password = request.queryParams("password")
+        val user = User.authenticate(userId, password)
+
+        if (user!=null) {
+          val session = Session.getSessionCookie()
+          response.cookie("session",session._id.toString)
+          response.redirect("/")
+          ""
         }
         else {
-          response.redirect("/index")
-          "redirecting to Index"
+          response.redirect("/web/pages/public/error.html")
+          ""
         }
       }
     })
