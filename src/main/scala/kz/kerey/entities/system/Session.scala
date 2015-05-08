@@ -6,7 +6,7 @@ import com.mongodb.casbah.commons.MongoDBObject
 import kz.kerey.db.DefaultDbConfig
 import org.bson.types.ObjectId
 
-case class Session(_id: ObjectId = new ObjectId, var expire: Long)
+case class Session(_id: ObjectId = new ObjectId, var expire: Long, var user: String)
 
 object Session {
 
@@ -28,10 +28,10 @@ object Session {
     }
   }
 
-  def getSessionCookie(): Session = {
-    val cookie = Session(expire = new Date().getTime + fiveMinutes)
-    sessions.insert( MongoDBObject("_id"->cookie._id, "expire"->cookie.expire) )
-    cookie
+  def getSessionCookie(user: String): Session = {
+    val session = Session(expire = (new Date().getTime + fiveMinutes), user = user)
+    sessions.insert( MongoDBObject("_id"->session._id, "expire"->session.expire, "user"->session.user) )
+    session
   }
 
 }

@@ -41,13 +41,15 @@ object ResourceController {
         val user = User.authenticate(userId, password)
 
         if (user!=null) {
-          val session = Session.getSessionCookie()
+          val session = Session.getSessionCookie(userId)
           response.cookie("session",session._id.toString)
+          response.removeCookie("status")
           response.redirect("/")
           ""
         }
         else {
-          response.redirect("/web/pages/public/error.html")
+          response.cookie("status", "false")
+          response.redirect("/web/pages/public/login.html")
           ""
         }
       }

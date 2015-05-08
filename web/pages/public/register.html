@@ -1,12 +1,39 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Registration</title>
+<head lang="en" >
+    <meta charset="UTF-8" >
+    <link rel="stylesheet" href="/web/css/style.css" >
 </head>
 <body>
 
-
+<div class="form">
+    <form method="get" action="/login">
+        <!--Чтоб подстветить поле с ошибкой - напиши "<div class="row hasError">"-->
+        <div class="row">
+            <label for="login">Login</label>
+            <input type="text" name="userId" id="login" />
+        </div>
+        <div class="row">
+            <label for="password">Password</label>
+            <input type="text" name="password" id="password" />
+        </div>
+        <div class="row">
+            <label for="login">Name</label>
+            <input type="text" name="name" id="name" />
+        </div>
+        <div class="row">
+            <label for="login">Lastname</label>
+            <input type="text" name="lastname" id="lastname" />
+        </div>
+        <div class="row">
+            <label for="login">E-mail</label>
+            <input type="text" name="email" id="email" />
+        </div>
+        <div class="p-center">
+            <input class="btn btn-success" type="submit" value="Login" />
+        </div>
+    </form>
+</div>
 
 </body>
 </html>
