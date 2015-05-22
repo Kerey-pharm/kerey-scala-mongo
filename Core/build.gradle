@@ -1,0 +1,5 @@
+apply plugin: 'scala'
+
+dependencies {
+    compile 'org.mongodb:casbah_2.11:2.8.1'
+}

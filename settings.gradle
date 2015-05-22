@@ -1,2 +1,5 @@
 rootProject.name = 'Scala_kerey'
 
+include 'ClientAdmin'
+include 'Core'
+include 'Rest'

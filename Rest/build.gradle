@@ -1,0 +1,8 @@
+apply plugin: 'scala'
+apply plugin: 'application'
+
+mainClassName = 'kz.kerey.Main'
+
+dependencies {
+    compile 'com.sparkjava:spark-core:2.1'
+}

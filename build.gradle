@@ -1,19 +1,22 @@
-apply plugin: 'scala'
-apply plugin: 'application'
+subprojects {
 
-mainClassName = 'kz.kerey.Main'
+    apply plugin: 'scala'
 
-repositories {
-    mavenCentral()
-    maven {
-        url 'http://repo1.maven.org/maven2/'
+    jar {
+        manifest.attributes provider: 'gradle'
     }
-}
 
-dependencies {
-    compile 'org.scala-lang:scala-library-all:2.11.6',
-            'org.mongodb:casbah_2.11:2.8.1',
-            'com.sparkjava:spark-core:2.1'
+    repositories {
+        mavenCentral()
+        maven {
+            url 'http://repo1.maven.org/maven2/'
+        }
+    }
 
-    testCompile 'org.scalatest:scalatest_2.11:2.2.4'
+    dependencies {
+        compile 'org.scala-lang:scala-library-all:2.11.6'
+
+        testCompile 'org.scalatest:scalatest_2.11:2.2.4'
+    }
+
 }
